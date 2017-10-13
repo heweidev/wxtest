@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var sha1 = require('sha1');
+
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
 
