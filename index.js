@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var sha1 = require('sha1');
+var crypto = require('crypto');
 
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
@@ -9,6 +9,12 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
+function sha1(str) {
+  var sha1 = crypto.createHash("sha1");//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
+  sha1.update(str);
+  var res = sha1.digest("hex");  //加密后的值d
+  return res;
+}
 
 function signature_handler(req, res, next) {
   var q = req.query;
