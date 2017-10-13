@@ -38,6 +38,8 @@ function signature_handler(req, res, next) {
   }
 }
 
+app.use(signature_handler);
+
 var server = app.listen(80, function () {
   var host = server.address().address;
   var port = server.address().port;
