@@ -9,7 +9,7 @@ https请求方式: GET
 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 */
 
-var http = require('http')
+var https = require('https')
 
 var TOKEN;
 
@@ -25,18 +25,19 @@ function getAccessToken() {
 
 function refreshAccessToken(appID, appsecret) {
     const url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appID + '&secret=' + appsecret;
+    console.log(url);
 
-    http.get(url, (res) => {
+    https.get(url, function (res) {
         const statusCode = res.statusCode;
         const contentType = res.headers['content-type'];
       
-        let error;
+        var error;
         if (statusCode !== 200) {
-          error = new Error('Request Failed.\n' +
-                            `Status Code: ${statusCode}`);
+          // error = new Error('Request Failed.\n' +
+          //                  `Status Code: ${statusCode}`);
         } else if (!/^application\/json/.test(contentType)) {
-          error = new Error('Invalid content-type.\n' +
-                            `Expected application/json but received ${contentType}`);
+          // error = new Error('Invalid content-type.\n' +
+          //                  `Expected application/json but received ${contentType}`);
         }
         if (error) {
           console.log(error.message);
@@ -46,7 +47,7 @@ function refreshAccessToken(appID, appsecret) {
         }
       
         res.setEncoding('utf8');
-        let rawData = '';
+        var rawData = '';
         res.on('data', (chunk) => rawData += chunk);
         res.on('end', () => {
           try {

@@ -1,2 +1,2 @@
-var token = require('token')
+var token = require('./token')
 token.refresh()
