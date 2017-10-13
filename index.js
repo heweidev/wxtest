@@ -5,9 +5,11 @@ var crypto = require('crypto');
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
 
+/*
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
+*/
 
 function sha1(str) {
   var sha1 = crypto.createHash("sha1");//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
@@ -29,15 +31,16 @@ function signature_handler(req, res, next) {
       3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信 
   */
   var str = [token, timestamp, nonce].sort().join('');
-  console.log(str);
-
   var sha = sha1(str);
+  console.log('sha1 = ' + sha + ', p = ' + JSON.stringify(q));
+
   if (req.method == 'GET') {
     if (sha == signature) {
       res.send(echostr + '')
     } else {
       res.send('err');
     }
+    next();
   } else if (req.method == 'POST') {
     if (sha != signature) {
       return;
