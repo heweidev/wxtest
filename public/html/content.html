@@ -10,7 +10,6 @@
     <body>
         <h1>a test page</h1>
         <div id = "userinfo"></div>
-
             <script>
                 function getUrlParam(name) {
                     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -18,7 +17,7 @@
                     if (r != null) return unescape(r[2]); return null; //返回参数值
                 }
 
-                    // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect 
+                // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect 
                 var code = getUrlParam('code')
                 var url = 'login?code=' + code;
                 

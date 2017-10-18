@@ -5,6 +5,9 @@ var crypto = require('crypto');
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
 app.use(express.static('public'));
+app.use(function(req, res, next){
+  console.log(JSON.stringify(req.query) + ", url = " + req.url);
+});
 
 /*
 app.get('/', function (req, res) {
@@ -30,8 +33,6 @@ function sha1(str) {
 }
 
 function signature_handler(req, res, next) {
-  console.log(JSON.stringify(req.query));
-
   if (req.method == 'GET') {
     var q = req.query;
     var token = TOKEN;
@@ -51,7 +52,8 @@ function signature_handler(req, res, next) {
     if (sha == signature) {
       res.send(echostr + '')
     } else {
-      res.send('err');
+      //res.send('err');
+      next();
     }
     next();
   } else if (req.method == 'POST') {
