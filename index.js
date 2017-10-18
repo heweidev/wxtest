@@ -12,6 +12,16 @@ app.get('/', function (req, res) {
 });
 */
 
+app.get('/login', function (req, res) {
+  var q = req.query;
+  var code = q.code;
+  if (code && code != '') {
+    token.getInfo(code, function(data){
+      res.send(data);
+    });
+  }
+});
+
 function sha1(str) {
   var sha1 = crypto.createHash("sha1");//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
   sha1.update(str);

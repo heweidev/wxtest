@@ -13,9 +13,8 @@
                 var appid = 'wx6015b569d0e07ec9';
                 var REDIRECT_URI = getAbsoluteUrl('content.html');
                 var scope = 'snsapi_userinfo';
-                
                 var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + 
-                    '&redirect_uri=' + REDIRECT_URI + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect';
+                    '&redirect_uri=' + encodeURI(REDIRECT_URI) + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect';
 
                 function getAbsoluteUrl(url){
                     var img = new Image();

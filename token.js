@@ -27,6 +27,38 @@ function refreshAccessToken(appID, appsecret) {
     const url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appID + '&secret=' + appsecret;
     console.log(url);
 
+    https_get(function(rawData){
+        try {
+            const parsedData = JSON.parse(rawData);
+            TOKEN = parsedData.access_token;
+
+            console.log(TOKEN);
+          } catch (e) {
+            console.log(e.message);
+          }
+    });
+}
+
+function getInfo(code, callback) {
+    // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code 
+    const url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appID + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code';
+    console.log(url);
+
+    https_get(function(rawData){
+        try {
+            const parsedData = JSON.parse(rawData);
+            // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
+            var url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + parsedData.access_token +
+                '&openid=' + parsedData.openid + '&lang=zh_CN';
+            https_get(url, callback)
+            console.log(rawData);
+          } catch (e) {
+            console.log(e.message);
+          }
+    });
+}
+
+function https_get(url, callback) {
     https.get(url, function (res) {
         const statusCode = res.statusCode;
         const contentType = res.headers['content-type'];
@@ -50,21 +82,17 @@ function refreshAccessToken(appID, appsecret) {
         var rawData = '';
         res.on('data', (chunk) => rawData += chunk);
         res.on('end', () => {
-          try {
-            const parsedData = JSON.parse(rawData);
-            TOKEN = parsedData.access_token;
-
-            console.log(TOKEN);
-          } catch (e) {
-            console.log(e.message);
-          }
+            callback(rawData);
         });
       }).on('error', (e) => {
         console.log(`Got error: ${e.message}`);
       });
 }
 
+// https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
+
 module.exports = {
+    getInfo: getInfo,
     get: getAccessToken,
     refresh: refreshAccessToken,
 };
