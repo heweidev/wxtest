@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Wx login test</title>
+        
+    </head>
+
+    <body>
+        <a href="" id="login">Login</a>
+
+        <script>
+                // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect 
+                var appid = 'wx6015b569d0e07ec9';
+                var REDIRECT_URI = getAbsoluteUrl('content.html');
+                var scope = 'snsapi_userinfo';
+                
+                var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + 
+                    '&redirect_uri=' + REDIRECT_URI + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect';
+
+                function getAbsoluteUrl(url){
+                    var img = new Image();
+                    img.src = url;  // 设置相对路径给Image, 此时会发送出请求
+                    url = img.src;  // 此时相对路径已经变成绝对路径
+                    img.src = null; // 取消请求
+                    return url;
+                }
+    
+                var loginBtn = document.getElementById("login");
+                loginBtn.href = url;
+        </script>
+    </body>
+</html>

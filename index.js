@@ -4,6 +4,7 @@ var crypto = require('crypto');
 
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
+app.use(express.static('public'));
 
 /*
 app.get('/', function (req, res) {
