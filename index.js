@@ -52,6 +52,7 @@ function signature_handler(req, res, next) {
 
       parseString(req.body, function (err, result) {
           if (err) {
+            console.log(err);
             res.send('success');
           } else {
               var tmp = result.FromUserName;
@@ -64,6 +65,7 @@ function signature_handler(req, res, next) {
               });
 
               var resMsg = builder.buildObject(result);
+              console.log(resMsg);
               res.send(resMsg);
           }
       });
