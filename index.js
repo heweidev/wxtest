@@ -55,9 +55,10 @@ function signature_handler(req, res, next) {
             console.log(err);
             res.send('success');
           } else {
-              var tmp = result.FromUserName;
-              result.FromUserName = result.ToUserName;
-              result.ToUserName = tmp;
+              var msg = result.xml;
+              var tmp = msg.FromUserName;
+              msg.FromUserName = msg.ToUserName;
+              msg.ToUserName = tmp;
 
               var builder = new xml2js.Builder({
                 rootName: 'test',
@@ -65,8 +66,8 @@ function signature_handler(req, res, next) {
               });
 
               var resMsg = builder.buildObject(result);
-              console.log(resMsg);
-              res.send(resMsg);
+              console.log(msg);
+              res.send(msg);
           }
       });
       
