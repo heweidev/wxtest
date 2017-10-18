@@ -6,7 +6,7 @@ var TOKEN = 'YyuqcgOCMCtPrUtF';
 
 app.use(express.static('public'));
 app.use(function(req, res, next){
-  console.log(JSON.stringify(req.query) + ", url = " + req.url);
+  console.log("access url = " + req.url);
   next()
 });
 
@@ -15,8 +15,6 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 */
-
-
 
 function sha1(str) {
   var sha1 = crypto.createHash("sha1");//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
@@ -83,7 +81,7 @@ function signature_handler(req, res, next) {
 }
 app.use(signature_handler);
 
-app.get('/login', function (req, res) {
+app.get('/html/login', function (req, res) {
   var q = req.query;
   var code = q.code;
   if (code && code != '') {
