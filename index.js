@@ -50,7 +50,7 @@ function signature_handler(req, res, next) {
       var xml2js = require('xml2js');
       var parseString = xml2js.parseString;
 
-      parseString(req.body, function (err, result) {
+      parseString(data, function (err, result) {
           if (err) {
             console.log(err);
             res.send('success');
@@ -67,7 +67,7 @@ function signature_handler(req, res, next) {
 
               var resMsg = builder.buildObject(result);
               console.log(msg);
-              res.send(msg);
+              res.send(resMsg);
           }
       });
       
