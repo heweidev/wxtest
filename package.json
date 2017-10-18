@@ -10,6 +10,8 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "~4.16.2"
+    "body-parser": "^1.18.2",
+    "express": "~4.16.2",
+    "xml2js": "^0.4.19"
   }
 }

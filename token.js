@@ -54,7 +54,7 @@ function refreshAccessToken(appID, appsecret) {
             const parsedData = JSON.parse(rawData);
             TOKEN = parsedData.access_token;
 
-            console.log(parsedData);
+            console.log(TOKEN);
           } catch (e) {
             console.log(e.message);
           }

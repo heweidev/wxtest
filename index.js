@@ -42,13 +42,21 @@ function signature_handler(req, res, next) {
     }
     next();
   } else if (req.method == 'POST') {
-    if (sha != signature) {
-      return;
-    }
-    next();
+    var data = "";
+    req.on('data', function(chunk){ data += chunk})
+    req.on('end', function(){
+      var parseString = require('xml2js').parseString;
+      parseString(req.body, function (err, result) {
+          
+      });
+      
+      console.log(data);
+
+      res.send('success');
+      next();
+    })
   }
 }
-
 app.use(signature_handler);
 
 var server = app.listen(80, function () {
