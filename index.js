@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var crypto = require('crypto');
+var token = require('./token');
 
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 

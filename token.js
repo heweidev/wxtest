@@ -10,13 +10,17 @@ https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID
 */
 
 var https = require('https')
+//var http = require('http')
 
 var TOKEN;
+
+var appID = 'wx6015b569d0e07ec9'
+var appsecret = 'd4624c36b6795d1d99dcf0547af5443d'
 
 
 function getAccessToken() {
     if (TOKEN == null || TOKEN == undefined || TOKEN.len == 0) {
-        refreshAccessToken('wx6015b569d0e07ec9', 'd4624c36b6795d1d99dcf0547af5443d')
+        refreshAccessToken(appID, appsecret)
         return null;
     } else {
         return TOKEN;
@@ -27,7 +31,7 @@ function refreshAccessToken(appID, appsecret) {
     const url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appID + '&secret=' + appsecret;
     console.log(url);
 
-    https_get(function(rawData){
+    https_get(url, function(rawData){
         try {
             const parsedData = JSON.parse(rawData);
             TOKEN = parsedData.access_token;
@@ -44,7 +48,7 @@ function getInfo(code, callback) {
     const url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appID + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code';
     console.log(url);
 
-    https_get(function(rawData){
+    https_get(url, function(rawData){
         try {
             const parsedData = JSON.parse(rawData);
             // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
