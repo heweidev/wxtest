@@ -84,10 +84,13 @@ function signature_handler(req, res, next) {
 }
 app.use(signature_handler);
 
+var lastCode;
+
 app.get('/html/login', function (req, res) {
   var q = req.query;
   var code = q.code;
-  if (code && code != '') {
+  if (code && code != '' && code != lastCode) {
+    lastCode = code;
     token.getInfo(code, function(data){
       console.log('data =' + data);
       res.send(data);
