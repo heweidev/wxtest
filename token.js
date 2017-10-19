@@ -51,13 +51,16 @@ function getInfo(code, callback) {
     https_get(url, function(rawData){
         try {
             const parsedData = JSON.parse(rawData);
+            console.log('access_token = ' + parsedData.access_token + ', rawData = ' + rawData);
+
             if (parsedData.access_token) {
+                console.log('access_token = ' + parsedData.access_token);
                 // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
                 var url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + parsedData.access_token +
                 '&openid=' + parsedData.openid + '&lang=zh_CN';
-                https_get(url, callback)
-                console.log(rawData);
+                https_get(url, callback);
             } else {
+		console.log('no token');
                 callback(rawData);
             }
           } catch (e) {
@@ -67,7 +70,8 @@ function getInfo(code, callback) {
 }
 
 function https_get(url, callback) {
-    https.get(url, function (res) {
+console.log('https_get ' + url);    
+https.get(url, function (res) {
         const statusCode = res.statusCode;
         const contentType = res.headers['content-type'];
       

@@ -5,11 +5,13 @@ var token = require('./token');
 
 var TOKEN = 'YyuqcgOCMCtPrUtF';
 
-app.use(express.static('public'));
+
 app.use(function(req, res, next){
   console.log("access url = " + req.url);
   next()
 });
+
+app.use(express.static('public'));
 
 /*
 app.get('/', function (req, res) {
@@ -87,7 +89,9 @@ app.get('/html/login', function (req, res) {
   var code = q.code;
   if (code && code != '') {
     token.getInfo(code, function(data){
+      console.log('data =' + data);
       res.send(data);
+      res.end();
     });
   }
 });

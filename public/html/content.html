@@ -22,7 +22,9 @@
                 var url = 'login?code=' + code;
 
                 $.get(url, function(result){
-                    $("#userinfo").html(result);
+                    //$("#userinfo").html(result);
+	            var div = document.createElement('div');
+                    $("#userinfo").append(div);
                 });
             </script>
     </body>
