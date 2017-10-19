@@ -46,16 +46,20 @@ function refreshAccessToken(appID, appsecret) {
 function getInfo(code, callback) {
     // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code 
     const url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appID + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code';
-    console.log(url);
+    console.log(`getInfo code = ${code}`);
 
     https_get(url, function(rawData){
         try {
             const parsedData = JSON.parse(rawData);
-            // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
-            var url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + parsedData.access_token +
+            if (parsedData.access_token) {
+                // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN 
+                var url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + parsedData.access_token +
                 '&openid=' + parsedData.openid + '&lang=zh_CN';
-            https_get(url, callback)
-            console.log(rawData);
+                https_get(url, callback)
+                console.log(rawData);
+            } else {
+                callback(rawData);
+            }
           } catch (e) {
             console.log(e.message);
           }
