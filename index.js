@@ -93,6 +93,9 @@ app.get('/html/login', function (req, res) {
       res.send(data);
       res.end();
     });
+  } else {
+    res.send('ok');
+    res.end();
   }
 });
 
